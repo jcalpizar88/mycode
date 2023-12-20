@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import pprint
+import pprint as p
 import requests
 from random import randint
 
@@ -11,22 +11,28 @@ def main():
 
     print("Trivia questions. Ready?")
     print("How many questions do you want")
-    amount = input(">>>")
+    amount1 = input(">>>")
 
     print("How difficult do you want the questions? easy, medium or hard")
-    difficulty = input(">>>")
+    difficulty1 = (input(">>>")).lower()
+    
 
-    trivia = requests.get(base_url + f"amount={amount}&difficulty={difficulty}").json()
+    trivia = requests.get(base_url + f"amount={amount1}&difficulty={difficulty1}").json()
 
-#for q in trivia[result]:
-    question = trivia.get('results')[randint(0, int(amount)-1)]["question"]
-    print(question)
-    answer = trivia.get('correct_answer')[randint(0, int(amount)-1)]["correct_answer"]
-    print(answer)
-
-   # response = trivia.get
-
-
+    response= []
+    for i in range(int(amount1)):   
+        print("Question "+ str(i+1)+ ": ")
+        question1 = trivia.get("results")[i]["question"]
+        p.pprint(question1)
+        print ("Enter your response: ")
+        response= input(">>>")
+        response1 = trivia.get("results")[i]["correct_answer"]
+        if response == response1:
+            print("CORRECT!!!")
+        else:
+            print("Incorrect!!! The right response is: ")
+        #response1 = trivia.get("results")[i]["correct_answer"]
+            p.pprint(response1)
 
 if __name__ == "__main__":
-    main()
+        main()
